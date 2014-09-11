@@ -1,0 +1,37 @@
+---
+title: "Regus2014 Data Analysis"
+author: "dned"
+date: "09/09/2014"
+output: 
+    html_document:
+        keep_md: true
+---
+
+```{r, echo=FALSE, message=FALSE}
+knitr::opts_chunk$set(tidy = FALSE, fig.height=4, echo=FALSE)
+options(stringsAsFactors = FALSE)
+library(dplyr)
+library(ggplot2)
+```
+
+
+Downloaded the data from Regus2014, pasted into Google Spreadsheets, and saved as a tsv.
+
+Holy shit, the population data is in `1.86 X 10 6` format, gross. Did some regex to make it sane: `1.86e6`. One line, "Winter 509 14x2 0 2 6.00  X 10 6 9. 5  X 10 6", had an issue with the last value, "9. 5". I assumed there was a zero missing, and corrected that.
+
+Reading the data in and taking a peak at it:
+
+```{r}
+setwd("~/Dropbox/gradschool/Regus2014/data")
+nodCulturing.df <- read.csv("Regus2014_TableS6.tsv", header= TRUE, sep="\t")
+```
+
+```{r}
+head(nodCulturing.df)
+```
+
+Do the two experiments have roughly the same distribution of nodule counts?
+```{r}
+ggplot(nodCulturing.df, aes(x=Experiment, y=PopEffStrain)) + geom_violin(fill="darkgrey")
+```
+
