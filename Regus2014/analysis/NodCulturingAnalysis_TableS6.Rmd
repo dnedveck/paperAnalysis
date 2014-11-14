@@ -22,7 +22,7 @@ Holy shit, the population data is in `1.86 X 10 6` format, gross. Did some regex
 Reading the data in and taking a peak at it:
 
 ```{r}
-setwd("~/Dropbox/gradschool/Regus2014/data")
+setwd("~/Dropbox/gradschool/paperAnalysis/Regus2014/data")
 nodCulturing.df <- read.csv("Regus2014_TableS6.tsv", header= TRUE, sep="\t")
 ```
 

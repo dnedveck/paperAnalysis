@@ -6,70 +6,65 @@ output: html_document
 ```{r, echo=FALSE, message=FALSE}
 library(ggplot2)
 library(dplyr)
-library(reshape2)
-knitr::opts_chunk$set(tidy=FALSE, fig.height = 4)
+knitr::opts_chunk$set(tidy=FALSE, fig.height = 4, message=FALSE)
 ```
 
-### Stuff to do
-- use reshape to make the data long (Fitness in each site turned into a factor and one column of fitness)
-
-reading the data in
+Reading the data in. Data was processed in `dataWrangle.Rmd`
 ```{r}
-setwd("~/Dropbox/gradschool/paperAnalysis/Wilczek2014/")
-datasetS1 <- read.csv("pnas.1406314111.sd01.csv")
+setwd("~/Dropbox/gradschool/paperAnalysis/Wilczek2014/data/")
+load("sd01_fitnessLong.Rdata")
 ```
 
-let's see if lat or lon predicts differences in fitness
-
-Working with the fitness in Halle, 51.4833° N, 11.9667° E
+Since a lot of things choke with NAs, I'm going to remove them from YearCollected. This removes the lines that I don't have date for when they were collected. Kind of important if looking at lines that are different through time.
 
 ```{r}
-summary(lm(datasetS1$Fitness.in.Halle.Autumn ~ datasetS1$Latitude.of.Origin))
-plot(datasetS1$Fitness.in.Halle.Autumn ~ datasetS1$Latitude.of.Origin)
+fitness.df <- fitness.df[ complete.cases(fitness.df["YearCollected"]),]
+```
+
+Christ, having "Autumn" instead of Fall is annoying
+```{r}
+fitness.df$Season <- gsub("Autumn", "Fall", fitness.df$Season)
+```
 
 
-halleFitness <-ggplot(datasetS1, 
-       aes(x = Latitude.of.Origin, y= Fitness.in.Halle.Autumn)) +
+
+### Making old / modern factor
+
+Can I partition the pops into a simple old / modern division?
+```{r}
+ggplot(fitness.df, aes(x=Lat, y=YearCollected)) + geom_point() + geom_hline( y=1970) + ggtitle("Potential partitioning of historical populations")
+```
+
+It looks there's a gap from ~1965 to ~1975, so partitioning at 1970 looks like a good time.
+
+Another thing to do would be look at annual trends in temperature, and pick a spot where there is a change in the rate of increase as a means of deciding which populations belong to one of the two groups. But I'll leave that as an excercise for the reader.
+
+```{r}
+fitness.df$HistPop <- 1
+fitness.df[fitness.df$YearCollected > 1970, "HistPop" ] <- "modern"
+fitness.df[fitness.df$YearCollected < 1970, "HistPop" ] <- "old"
+```
+
+
+## Fitness in each region
+
+Let's compare the fitness of the old and modern pops in Halle (51.4833° N, 11.9667° E) in Fall
+```{r, message=FALSE}
+fallHalle <- fitness.df %>% filter(Season == "Fall", Location == "Halle")
+halleFitness <-ggplot(fallHalle, 
+       aes(x = Lat, y= Fitness)) +
   geom_point(alpha=.5) + geom_smooth(method="loess") +
   geom_vline(x=51.488) +
   ggtitle("Fitness at Halle in Autumn")
 halleFitness
 
-# Now with Facets
-halleFitness + facet_grid(Time.period ~ .)
-
+# Now with Facets reflect the population
+halleFitness + facet_grid(HistPop ~ .)
 ```
 
-
-## Fig 2
-instead of box plots, I want violin plots. Jerks didn't give m a table of how they binned the different accessions into a region. 
 
 ```{r}
-# 2A
-# ggplot(datasetS1, aes(x=))
+
 ```
 
 
-
-
-## Recreating fig 3
-I really didn't like how they were showing trends in plots that looked like a bunch of garbage
-
-Is there a way I partition the data into more modern pops, and then older pops, to compare historical differences. From the plot of `Likely.Year.Collected ~ Lattitude.of.Origin`, it looks there's a gap from ~1965 to ~1975, so partitioning at 1970 looks like a good time.
-
-```{r}
-ggplot(datasetS1, aes(x=Latitude.of.Origin, y=Likely.Year.Collected)) + geom_point() + geom_hline( y=1970) + ggtitle("Potential partitioning of historical populations")
-```
-
-Another thing to do would be look at annual trends in temperature, and pick a spot where there is a change in the rate of increase as a means of deciding which populations belong to one of the two groups.
-
-## Looking at year collected and the latitude
-
-```{r}
-ggplot(datasetS1, aes(x=Latitude.of.Origin, y=Likely.Year.Collected)) + geom_point()
-```
-
-Lat 45 is only present in 1960 and previous; 50 could be over represented by earlier collected dates. 
-
-
-## 

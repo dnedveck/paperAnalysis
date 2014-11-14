@@ -1,0 +1,7 @@
+Location,Season,Temp.HistoricMeanAnnnual,Temp.OptimalMeanAnnual,Temp.HistoricApril,Temp.GrowthApril,Temp.OptimalApril,Temp.HistoricOctober,Temp.GrowthOctober,Temp.OptimalOctober,Latitude,OptimalLatitude
+UK,Summer,10,16,7.7,11.4,15,11,13.7,17,52.6,43.7
+UK,Spring,10,13.9,7.7,11.4,11.4,11,13.7,14.8,52.6,46
+UK,Fall,10,16,7.7,11.4,15,11,13.7,17,52.6,37
+Germany,Fall,9,12.5,8.1,11.8,11.2,9.6,13,13.7,51.5,46.8
+Spain,Fall,16.9,16,14.5,15,15,18,NA,17,39.6,37
+Finland,Fall,1.9,7,0.4,2.3,5.4,2.8,5.8,7.7,65.1,54.2

@@ -1,0 +1,80 @@
+
+##Column names description
+host.trt = Host species treatment (i.e. A.salicina, A. stenophylla or A.salicina & A. stenophlla)
+species = the species of the individual plant
+plant = A or B (two plants in each pot)
+bact.trt = the rhizobial treatment (see below for codes)
+Block = experimental blocking
+n.strains = number of rhizobial genotypes in bact.trt
+treatment.no = individual treatment number
+nodulation = nodulation score (see paper for details)
+Wt = plant dry weight in grams
+
+
+##Rhizobial strains used in experiments. Codes after colons (i.e. A1 etc) are used for abbreviation in experimental treatment description below.
+
+Bradyrhizobium 13-5 R34: A1
+Bradyrhizobium 21-2 R35: A2
+Bradyrhizobium 23-2 R20: A3
+Bradyrhizobium 10-1 R29: A4
+
+Mesorhizobium 11-2 R27:	B1
+Mesorhizobium 43-1 R15: B2
+Mesorhizobium 34-2 R6: B3
+Mesorhizobium 24-2 R18:	B4
+
+Rhizobium 44-1 R9: C1
+Rhizobium 4-2 R5: C2
+Rhizobium 12-1 R21: C3
+Rhizobium 44-2 R38: C4
+
+Sinorhizobium 23-2 R4: D1
+Sinorhizobium 3-3 R30: D2
+Sinorhizobium 44-1 R6: D3
+Sinorhizobium 37-1 R27: D4
+
+
+##Rhizobial treatments (bact.trt in data file)
+
+1	A1
+2	A2
+3	A3
+4	A4
+5	B1
+6	B2
+7	B3
+8	B4
+9	C1
+10	C2
+11	C3
+12	C4
+13	D1
+14	D2
+15	D3
+16	D4
+17	A1, A4
+18	A3, A2
+19	B4, B2
+20	B1, B3
+21	C2, C4
+22	C1, C3
+23	D1, D3
+24	D2, D4
+25	C4, B2
+26	B1, D4
+27	C2, B3
+28	D1, A3
+29	A2, C3
+30	A4, C1
+31	A1, D2
+32	B4, D3
+33	A1-A4
+34	B1-B4
+35	C1-C4
+36	D1-D4
+37	A1, B3, C4, D1
+38	A3, B2, C2, D4
+39	A2, B4, C1, D3
+40	A4, B1, C4, D2
+41	N- CONTROL
+42	N+ CONTROL
