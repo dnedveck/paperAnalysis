@@ -1,0 +1,55 @@
+---
+title: "Adding Data"
+author: "Derek Nedveck"
+date: "11/19/2014"
+output: html_document
+---
+
+This report shows how I am adding columns to the data frame to facilitate some later data analysis, as well as setting up the data.frame to be exported as an R object to be used in some classroom data analysis. 
+
+## Bring in Data
+```{r}
+# data from the paper
+barrett.df <- read.csv("Barrett2014.csv")
+# factors I created using info from the metadata
+bact.df <- read.csv("bactTreatmentVars.csv")
+```
+
+### doing some data.frame maintenence
+
+```{r}
+str(barrett.df)
+# bact.trt, nodulation, treat.no should be factors
+barrett.df$bact.trt <- as.factor(barrett.df$bact.trt)
+barrett.df$nodulation <- as.factor(barrett.df$nodulation)
+barrett.df$treat.no <- as.factor(barrett.df$treat.no)
+```
+
+```{r}
+str(bact.df)
+# bact.trt and bact.div should be factors
+bact.df$bac.trt <- as.factor(bact.df$bac.trt)
+bact.df$bact.div <- as.factor(bact.df$bact.div)
+```
+
+
+### Merging the dataframes together 
+
+```{r}
+catch <- merge(x = barrett.df, y = bact.df, by= bac.trt)
+```
+
+
+
+
+
+
+
+
+## Saving data
+```{r}
+write.table(x = barrett.df, file = "barrett2014_extra.csv", sep = ",",
+            quote = FALSE, )
+save(barrett.df, file = "barret.df.Rdata")
+```
+

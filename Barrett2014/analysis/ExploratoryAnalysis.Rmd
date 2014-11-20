@@ -1,0 +1,73 @@
+---
+title: "Barrett2014 Exploring"
+author: "Derek Nedveck"
+date: "11/14/2014"
+output: html_document
+---
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(tidy = FALSE, fig.height = 4)
+```
+
+
+```{r, message=FALSE}
+library(dplyr)
+library(ggplot2)
+```
+
+
+Exploring the data from the Barrett2014 paper.
+
+```{r}
+setwd("../data")
+barrett.df <- read.csv(file= "Barrett2014.csv", header = TRUE)
+str(barrett.df)
+```
+
+Doing some data.frame maintenance
+```{r}
+# removing NAs
+barrett.df <- na.omit(barrett.df)
+# setting nodulation as a factor, as it's a nodulation score
+barrett.df$nodulation <- as.factor(barrett.df$nodulation)
+```
+
+
+Let's look at the distribution of plant weight
+```{r}
+ggplot(barrett.df, aes(x=Wt)) + geom_histogram(binwidth = 0.2)
+```
+
+... and that's why they did a log transform...
+
+```{r}
+ggplot(barrett.df, aes(x=log(Wt))) + geom_histogram(binwidth = 0.2)
+```
+
+That's cool, it's bimodal. I wonder if that's mainly from the two different plant species
+
+```{r}
+ggplot(barrett.df, aes(x=log(Wt), fill = species)) + geom_histogram(binwidth = 0.2)
+```
+
+Nope, the bimodal effect isn't based on plant species.
+
+What about the number of strains in the bacterial treatment (one of the points of the paper was that more bacteria in the treatment was detrimental to the fitness of the plants )
+
+```{r}
+ggplot(barrett.df, aes(x=log(Wt), fill = n.strains)) + geom_histogram(binwidth = 0.2)
+```
+
+Nope.
+
+What about the amount of nodulation that the plants had:
+
+```{r}
+ggplot(barrett.df, aes(x=log(Wt), fill = nodulation)) + geom_histogram(binwidth = 0.2)
+```
+
+```{r}
+ggplot(barrett.df, aes(x=log(Wt), fill = host.trt)) + geom_histogram(binwidth = 0.2)
+```
+
+

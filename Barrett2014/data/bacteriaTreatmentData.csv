@@ -1,0 +1,43 @@
+bac.trt,rhiz.strain,rhiz.genus
+1,A1,brady
+2,A2,brady
+3,A3,brady
+4,A4,brady
+5,B1,meso
+6,B2,meso
+7,B3,meso
+8,B4,meso
+9,C1,rhizo
+10,C2,rhizo
+11,C3,rhizo
+12,C4,rhizo
+13,D1,sino
+14,D2,sino
+15,D3,sino
+16,D4,sino
+17,"A1, A4",brady
+18,"A3, A2",brady
+19,"B4, B2",meso
+20,"B1, B3",meso
+21,"C2, C4",rhizo
+22,"C1, C3",rhizo
+23,"D1, D3",sino
+24,"D2, D4",sino
+25,"C4, B2",mix
+26,"B1, D4",mix
+27,"C2, B3",mix
+28,"D1, A3",mix
+29,"A2, C3",mix
+30,"A4, C1",mix
+31,"A1, D2",mix
+32,"B4, D3",mix
+33,A1-A4,brady
+34,B1-B4,meso
+35,C1-C4,rhizo
+36,D1-D4,sino
+37,"A1, B3, C4, D1",mix
+38,"A3, B2, C2, D4",mix
+39,"A2, B4, C1, D3",mix
+40,"A4, B1, C4, D2",mix
+41,"N- CONTROL",none
+42,"N+ CONTROL",none

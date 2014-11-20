@@ -1,0 +1,43 @@
+---
+title: "Fitting some models"
+author: "Derek Nedveck"
+date: "11/19/2014"
+output: html_document
+---
+
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(tidy = FALSE, fig.height = 4)
+```
+
+
+```{r, message=FALSE}
+library(dplyr)
+library(ggplot2)
+```
+
+
+
+```{r}
+setwd("../data")
+barrett.df <- read.csv(file= "Barrett2014.csv", header = TRUE)
+str(barrett.df)
+```
+
+## fitting some models
+
+### Does nodulation level affect the amount of plant biomass?
+
+Simple model of plant weight explained by the amount of nodulation
+```{r}
+# nodulation should be a factor, as it's nodulation score
+lm.nodulation <- lm(Wt ~ as.factor(nodulation), data = barrett.df)
+plot(lm.nodulation, which = c(1:2))
+```
+
+They did a log transform of their data, since it is definitely not normal. So let's fit a model with that:
+```{r}
+lm.logwt.nodulation <- lm(log(Wt) ~ as.factor(nodulation), data = barrett.df)
+plot(lm.logwt.nodulation, which=c(1:2))
+```
+
