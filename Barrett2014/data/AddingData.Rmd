@@ -1,5 +1,5 @@
 ---
-title: "Adding Data"
+title: "Adding and Processing Barrett2014 Data"
 author: "Derek Nedveck"
 date: "11/19/2014"
 output: html_document
@@ -23,33 +23,36 @@ str(barrett.df)
 barrett.df$bact.trt <- as.factor(barrett.df$bact.trt)
 barrett.df$nodulation <- as.factor(barrett.df$nodulation)
 barrett.df$treat.no <- as.factor(barrett.df$treat.no)
+# Number doesn't seem to add any information (it is correlated with bac.trt)
+#  also not mentioned in the metadata, so I am removing it
+barrett.df$Number <- NULL
+str(barrett.df)
 ```
 
 ```{r}
 str(bact.df)
 # bact.trt and bact.div should be factors
-bact.df$bac.trt <- as.factor(bact.df$bac.trt)
+bact.df$bact.trt <- as.factor(bact.df$bact.trt)
 bact.df$bact.div <- as.factor(bact.df$bact.div)
+str(bact.df)
 ```
 
 
 ### Merging the dataframes together 
 
 ```{r}
-catch <- merge(x = barrett.df, y = bact.df, by= bac.trt)
+barrett.df <- merge(x = barrett.df, y = bact.df, by.x= "bact.trt", by.y = "bact.trt")
 ```
 
-
-
-
-
-
-
+Since `treat.no` is covered in `rhiz.strain` (except with more information), I am removing this from the data frame
+```{r}
+barrett.df$treat.no <- NULL
+```
 
 ## Saving data
 ```{r}
-write.table(x = barrett.df, file = "barrett2014_extra.csv", sep = ",",
-            quote = FALSE, )
+write.table(x = barrett.df, file = "barrett2014_processed.csv", sep = ",",
+            quote = FALSE, row.names = FALSE )
 save(barrett.df, file = "barret.df.Rdata")
 ```
 

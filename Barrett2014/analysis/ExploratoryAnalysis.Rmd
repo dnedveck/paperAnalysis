@@ -70,4 +70,8 @@ ggplot(barrett.df, aes(x=log(Wt), fill = nodulation)) + geom_histogram(binwidth 
 ggplot(barrett.df, aes(x=log(Wt), fill = host.trt)) + geom_histogram(binwidth = 0.2)
 ```
 
+#### Bulk plotting
+```{r}
+plot(barrett.df)
+```
 
