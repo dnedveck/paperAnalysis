@@ -1,0 +1,88 @@
+---
+title: "Barrett2014 Reader"
+author: "Derek Nedveck"
+date: "11/20/2014"
+output: html_document
+---
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(tidy = FALSE, fig.height = 4)
+```
+
+For the class project we are going to be working with data from Barrett *et al.* 2014: Partner diversity and identity impacts on plant productivity in *Acacia*–rhizobial interactions
+
+## Quick tour of the data 
+
+```{r, message=FALSE}
+library(dplyr)
+library(ggplot2)
+```
+
+```{r, message=FALSE}
+load("barret.df.Rdata")
+```
+
+
+I've taken the data from the Data Dryad repository, removed some columns that didn't add any information, and then added some other variables in that could be useful in an anaylsis. This was then saved as and `.Rdata` to make it easy to bring into `R` and work with. 
+
+Here's the data
+
+```{r}
+str(barrett.df)
+```
+
+- `Plant` is which plant in the pot it was, A or B (two plants per pot)
+- `Wt` is the plant dry weight in grams
+- `Block` is the block that the plants were grown in
+- `host.trt` is the species of *Acacia* that were in the pot, *A.salicina*, *A. stenophylla* or *A.salicina* & *A. stenophlla*
+- `species` is the species of the individual plant
+- `n.strains` - the number of different rhizobia strains that were present
+- `nodulation` - the nodulation score, "a categorical assessment of nodule biomass based on number and size (ranging from 1 to 5: 1 = small number (< 10) of small nodules (~1–2 mm in diameter); 5 = numerous large N2 fixing nodules with pink/red centres)" -- *Note: not really sure how this was determined - Derek*
+- `rhiz.strain` - the rhizobial strain used in the treatment
+- `rhiz.genus` - the genera present, brady = *Bradyrhizobium*, meso = *Mesorhizobium*, rhizo = *Rhizobium*, sino = *Sinorhizobium*. 
+- `bact.div` - the number of different bacterial genera present
+
+### Distribution of the response
+
+The plant dry mass is the response variable, so let's see how it is distributed:
+```{r}
+hist(barrett.df$Wt, breaks = 50, col = "darkgrey")
+```
+
+It's quite clear that this is not normally distributed. In the analysis they did in their paper, they did a log transformation:
+
+```{r}
+hist(log(barrett.df$Wt), breaks = 50, col = "darkgrey")
+```
+
+This shows a bimodal distribution, which is interesting. Kind of begs the question "what is causing that?"
+
+### Bimodal distribution
+
+Here's some `ggplot` graphs to quickly look at potential factors that are causing the bimodal structure of the histogram
+
+```{r}
+ggplot(barrett.df, aes(x=log(Wt), fill = species)) + geom_histogram(binwidth = 0.2) + 
+    ggtitle("Plant Species") + xlab("ln(Plant Dry Weight)")
+```
+
+
+```{r}
+ggplot(barrett.df, aes(x=log(Wt), fill = n.strains)) + geom_histogram(binwidth = 0.2) + 
+    ggtitle("Number of Rhizobial Strains") + xlab("ln(Plant Dry Weight)")
+```
+
+```{r}
+ggplot(barrett.df, aes(x=log(Wt), fill = bact.div)) + geom_histogram(binwidth = 0.2) + 
+    ggtitle("Number of Genera Present") + xlab("ln(Plant Dry Weight)")
+```
+
+```{r}
+ggplot(barrett.df, aes(x=log(Wt), fill = rhiz.genus)) + geom_histogram(binwidth = 0.2) + 
+    ggtitle("Rhizobial Genera Present") + xlab("ln(Plant Dry Weight)")
+```
+
+```{r}
+ggplot(barrett.df, aes(x=log(Wt), fill = nodulation)) + geom_histogram(binwidth = 0.2) + 
+    labs(title = "Nodulation Score") + xlab("ln(Plant Dry Weight)")
+```

@@ -44,8 +44,9 @@ str(bact.df)
 barrett.df <- merge(x = barrett.df, y = bact.df, by.x= "bact.trt", by.y = "bact.trt")
 ```
 
-Since `treat.no` is covered in `rhiz.strain` (except with more information), I am removing this from the data frame
+Since `treat.no` and `bact.trt` are covered in `rhiz.strain` (except with more information), I am removing them from the data frame
 ```{r}
+barrett.df$bact.trt <- NULL
 barrett.df$treat.no <- NULL
 ```
 
