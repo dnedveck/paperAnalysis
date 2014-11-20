@@ -1,0 +1,46 @@
+---
+title: "Exploratory Analysis"
+author: "Derek Nedveck"
+date: "11/17/2014"
+output: html_document
+---
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(tidy = FALSE, fig.height = 4)
+```
+
+
+```{r, message=FALSE}
+library(dplyr)
+library(ggplot2)
+```
+
+
+Taking a peak
+
+```{r}
+setwd("../data")
+jsg.df <- read.csv("CfE2_data.csv", header = TRUE)
+```
+
+## Data
+
+This experiments were looking at fitness, so the response variables are going to be dealing with number of seed pods per plant (`seed.pods`), number of pods collected to count seeds (`pods.counted`), number of seeds in these pods (`seeds.counted`), and the average seed weight (`avg.seed.weight`)
+
+## Plots
+
+Looking at the distributions of the fitness variables:
+```{r}
+ggplot(jsg.df, aes(x = seed.pods)) + geom_histogram()
+ggplot(jsg.df, aes(x = pods.counted)) + geom_histogram()
+ggplot(jsg.df, aes(x = seeds.counted)) + geom_histogram()
+ggplot(jsg.df, aes(x = avg.seed.weight)) + geom_histogram()
+```
+
+## let's see how things are correlated
+
+```{r}
+plot(seed.pods ~ region,data = jsg.df)
+ggplot(jsg.df, aes(x = seed.pods, fill = region)) + geom_histogram()
+```
+
